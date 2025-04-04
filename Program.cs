@@ -125,48 +125,48 @@ class ArbolAVL
         if (nodo == null)
             return nodo;
 
-        // Navegación recursiva
+        
         if (valor < nodo.valor)
             nodo.izquierdo = Eliminar(nodo.izquierdo, valor);
         else if (valor > nodo.valor)
             nodo.derecho = Eliminar(nodo.derecho, valor);
         else
         {
-            // Nodo con un hijo o sin hijos
+            
             if (nodo.izquierdo == null)
                 return nodo.derecho;
             else if (nodo.derecho == null)
                 return nodo.izquierdo;
 
-            // Nodo con dos hijos: obtener el sucesor inorden (mínimo del subárbol derecho)
+            
             nodo.valor = ValorMinimo(nodo.derecho);
 
-            // Eliminar el sucesor inorden
+            
             nodo.derecho = Eliminar(nodo.derecho, nodo.valor);
         }
 
-        // Actualizar altura
+        
         nodo.altura = Math.Max(Altura(nodo.izquierdo), Altura(nodo.derecho)) + 1;
 
-        // Obtener factor de equilibrio y rebalancear
+        
         int balance = FactorEquilibrio(nodo);
 
-        // Caso Izquierda-Izquierda
+        
         if (balance > 1 && FactorEquilibrio(nodo.izquierdo) >= 0)
             return RotacionDerecha(nodo);
 
-        // Caso Izquierda-Derecha
+        
         if (balance > 1 && FactorEquilibrio(nodo.izquierdo) < 0)
         {
             nodo.izquierdo = RotacionIzquierda(nodo.izquierdo);
             return RotacionDerecha(nodo);
         }
 
-        // Caso Derecha-Derecha
+        
         if (balance < -1 && FactorEquilibrio(nodo.derecho) <= 0)
             return RotacionIzquierda(nodo);
 
-        // Caso Derecha-Izquierda
+        
         if (balance < -1 && FactorEquilibrio(nodo.derecho) > 0)
         {
             nodo.derecho = RotacionDerecha(nodo.derecho);
@@ -188,7 +188,7 @@ class ArbolAVL
     }
 }
 
-// Implementación del BST estándar
+
 class NodoBST
 {
     public int valor;
@@ -257,16 +257,16 @@ class ArbolBST
             nodo.derecho = Eliminar(nodo.derecho, valor);
         else
         {
-            // Nodo con un hijo o sin hijos
+            
             if (nodo.izquierdo == null)
                 return nodo.derecho;
             else if (nodo.derecho == null)
                 return nodo.izquierdo;
 
-            // Nodo con dos hijos: obtener el sucesor inorden (mínimo del subárbol derecho)
+            
             nodo.valor = ValorMinimo(nodo.derecho);
 
-            // Eliminar el sucesor inorden
+            
             nodo.derecho = Eliminar(nodo.derecho, nodo.valor);
         }
         return nodo;
@@ -288,18 +288,18 @@ class Program
 {
     static void Main()
     {
-        // Preparamos los datos
+        // Datos
         int cantidad = 10000;
         int[] valores = GenerarValoresAleatorios(cantidad);
         
-        // Probamos con el árbol AVL
-        Console.WriteLine("=== ÁRBOL AVL ===");
+        // Arbol AVL
+        Console.WriteLine(" ARBOL AVL ");
         MedirRendimientoAVL(valores);
         
         Console.WriteLine();
         
-        // Probamos con el árbol BST
-        Console.WriteLine("=== ÁRBOL BST ===");
+        // Arbol BST
+        Console.WriteLine(" ARBOL BST ");
         MedirRendimientoBST(valores);
         
         Console.WriteLine("\nNota: Los tiempos pueden variar entre ejecuciones. Para resultados más precisos,");
@@ -314,7 +314,7 @@ class Program
         for (int i = 0; i < cantidad; i++)
             valores[i] = rnd.Next(1, 100000);
             
-        Array.Sort(valores); // Ordenamos para poder probar búsquedas en inicio, medio y final
+        Array.Sort(valores);  
         return valores;
     }
     
@@ -323,14 +323,14 @@ class Program
         ArbolAVL arbol = new ArbolAVL();
         Stopwatch stopwatch = new Stopwatch();
         
-        // Medir tiempo de inserción
+        
         stopwatch.Start();
         foreach (int valor in valores)
             arbol.Insertar(valor);
         stopwatch.Stop();
         Console.WriteLine($"Tiempo de inserción: {stopwatch.ElapsedMilliseconds} ms");
         
-        // Medir tiempo de búsqueda en inicio, medio y final
+        
         int valorInicio = valores[0];
         int valorMedio = valores[valores.Length / 2];
         int valorFinal = valores[valores.Length - 1];
@@ -350,7 +350,7 @@ class Program
         stopwatch.Stop();
         Console.WriteLine($"Tiempo de búsqueda (final): {stopwatch.ElapsedMilliseconds} ms");
         
-        // Medir tiempo de eliminación
+        // Tiempo de eliminación
         int valorEliminar = valores[valores.Length / 4];
         stopwatch.Restart();
         arbol.Eliminar(valorEliminar);
@@ -363,14 +363,14 @@ class Program
         ArbolBST arbol = new ArbolBST();
         Stopwatch stopwatch = new Stopwatch();
         
-        // Medir tiempo de inserción
+        
         stopwatch.Start();
         foreach (int valor in valores)
             arbol.Insertar(valor);
         stopwatch.Stop();
         Console.WriteLine($"Tiempo de inserción: {stopwatch.ElapsedMilliseconds} ms");
         
-        // Medir tiempo de búsqueda en inicio, medio y final
+        //  inicio, medio y final
         int valorInicio = valores[0];
         int valorMedio = valores[valores.Length / 2];
         int valorFinal = valores[valores.Length - 1];
@@ -390,7 +390,7 @@ class Program
         stopwatch.Stop();
         Console.WriteLine($"Tiempo de búsqueda (final): {stopwatch.ElapsedMilliseconds} ms");
         
-        // Medir tiempo de eliminación
+        // se mide el tiempo y la eliminacion
         int valorEliminar = valores[valores.Length / 4];
         stopwatch.Restart();
         arbol.Eliminar(valorEliminar);
